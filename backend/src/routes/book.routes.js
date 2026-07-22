@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const { addBook, getAllBooks, getBookById,updateBook,deleteBook } = require("../controllers/book.controller");
+const { addBook, getAllBooks, getBookById,updateBook,deleteBook,searchBooks } = require("../controllers/book.controller");
 const { protect } = require("../middleware/auth.middleware");
 
 // Public route
 router.get("/", getAllBooks);
+router.get("/search", searchBooks);
 router.get("/:id", getBookById);
 
 // Protected route

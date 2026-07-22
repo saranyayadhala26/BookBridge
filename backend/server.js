@@ -5,6 +5,8 @@ const cors = require("cors");
 const bookRoutes = require("./src/routes/book.routes");
 const connectDB = require("./src/config/db");
 const borrowRoutes = require("./src/routes/borrow.routes");
+const dashboardRoutes = require("./src/routes/dashboard.routes");
+const profileRoutes = require("./src/routes/profile.routes");
 
 dotenv.config();
 
@@ -17,7 +19,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 app.use("/api/borrow", borrowRoutes);
-
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/profile", profileRoutes);
 // Test Route
 app.get("/", (req, res) => {
   res.send("🚀 Welcome to BookBridge API");

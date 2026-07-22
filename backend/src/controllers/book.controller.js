@@ -180,10 +180,62 @@ const deleteBook = async (req, res) => {
   }
 };
 
+const searchBooks = async (req, res) => {
+    try {
+
+        const { title, author, category, location } = req.query;
+
+        const filter = {};
+
+        if (title) {
+            filter.title = {
+                $regex: title,
+                $options: "i"
+            };
+        }
+
+        if (author) {
+            filter.author = {
+                $regex: author,
+                $options: "i"
+            };
+        }
+
+        if (category) {
+            filter.category = {
+                $regex: category,
+                $options: "i"
+            };
+        }
+
+        if (location) {
+            filter.location = {
+                $regex: location,
+                $options: "i"
+            };
+        }
+
+        const books = await Book.find(filter);
+
+        res.status(200).json({
+            success: true,
+            count: books.length,
+            books
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
   addBook,
   getAllBooks,
   getBookById,
   updateBook,
   deleteBook,
+  searchBooks
 };
