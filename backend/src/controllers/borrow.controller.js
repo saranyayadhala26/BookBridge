@@ -1,4 +1,5 @@
 const Book = require("../models/book");
+const Notification = require("../models/notification");
 const BorrowRequest = require("../models/BorrowRequest");
 
 const requestBook = async (req, res) => {
@@ -52,6 +53,14 @@ const borrowRequest = await BorrowRequest.create({
   book: bookId,
   borrower: req.user.id,
   owner: book.owner,
+});
+
+await Notification.create({
+  recipient: book.owner,
+  sender: req.user.id,
+  book: bookId,
+  type: "BORROW_REQUEST",
+  message: "requested to borrow your book",
 });
 
 return res.status(201).json({

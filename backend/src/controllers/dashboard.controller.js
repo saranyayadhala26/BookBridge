@@ -18,13 +18,13 @@ const getDashboard = async (req, res) => {
         // Books borrowed by the logged-in user
         const booksBorrowed = await BorrowRequest.countDocuments({
             borrower: req.user.id,
-            status: "Approved"
+            status: "Accepted"
         });
 
         // Books lent by the logged-in user
         const booksLent = await BorrowRequest.countDocuments({
             owner: req.user.id,
-            status: "Approved"
+            status: "Accepted"
         });
 
         // Pending borrow requests for the logged-in user's books

@@ -91,7 +91,7 @@ const getProfileStats = async (req, res) => {
 
         const booksBorrowed = await BorrowRequest.countDocuments({
             borrower: req.user.id,
-            status: "Approved"
+            status: "Accepted"
         });
 
         const user = await User.findById(req.user.id);

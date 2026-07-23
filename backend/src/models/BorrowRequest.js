@@ -31,8 +31,8 @@ const borrowRequestSchema = new mongoose.Schema(
       default: Date.now,
     },
 
-    approvedDate: {
-      type: Date,
+    AcceptedDate:{
+          type: Date,
     },
 
     returnedDate: {

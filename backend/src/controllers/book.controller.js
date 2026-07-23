@@ -18,15 +18,6 @@ console.log(req.file);
 
 const coverImage = req.file ? req.file.location : "";
 
-
-    // Basic Validation
-    if (!title || !author || !category) {
-      return res.status(400).json({
-        success: false,
-        message: "Title, author and category are required",
-      });
-    }
-
     // Create Book
     const book = await Book.create({
       title,
@@ -36,7 +27,6 @@ const coverImage = req.file ? req.file.location : "";
       condition,
       coverImage,
       location,
-
       // Temporary owner (we'll replace this with JWT in the next step)
       owner: req.user.id,
     });
@@ -187,7 +177,7 @@ const deleteBook = async (req, res) => {
 const searchBooks = async (req, res) => {
     try {
 
-        const { title, author, category, description, condition,location } = req.body;
+        const { title, author, category, description, condition,location } = req.query;
     
         const filter = {};
 
