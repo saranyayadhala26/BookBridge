@@ -1,7 +1,10 @@
-const authRoutes = require("./src/routes/auth.routes");
-const express = require("express");
 const dotenv = require("dotenv");
+dotenv.config();
+
+const express = require("express");
 const cors = require("cors");
+
+const authRoutes = require("./src/routes/auth.routes");
 const bookRoutes = require("./src/routes/book.routes");
 const connectDB = require("./src/config/db");
 const borrowRoutes = require("./src/routes/borrow.routes");

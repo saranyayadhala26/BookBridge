@@ -6,14 +6,18 @@ const Book = require("../models/book");
 const addBook = async (req, res) => {
   try {
     const {
-      title,
-      author,
-      category,
-      description,
-      condition,
-      coverImage,
-      location,
-    } = req.body;
+  title,
+  author,
+  category,
+  description,
+  condition,
+  location,
+} = req.body;
+
+console.log(req.file);
+
+const coverImage = req.file ? req.file.location : "";
+
 
     // Basic Validation
     if (!title || !author || !category) {
@@ -183,8 +187,8 @@ const deleteBook = async (req, res) => {
 const searchBooks = async (req, res) => {
     try {
 
-        const { title, author, category, location } = req.query;
-
+        const { title, author, category, description, condition,location } = req.body;
+    
         const filter = {};
 
         if (title) {
@@ -231,11 +235,34 @@ const searchBooks = async (req, res) => {
     }
 };
 
+const uploadBookCover = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "No image uploaded",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Image uploaded successfully",
+      imageUrl: req.file.location,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   addBook,
   getAllBooks,
   getBookById,
   updateBook,
   deleteBook,
-  searchBooks
+  searchBooks,
+  uploadBookCover
 };
