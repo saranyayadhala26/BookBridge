@@ -36,8 +36,10 @@ export default function WishlistScreen() {
     try {
       const data = await getWishlist();
 
-const books = data.wishlist.map((item: any) => item.book);
-
+const books = (data.wishlist || [])
+  .map((item: any) => item.book)
+  .filter((book: any) => book && book._id);
+  
 setBooks(books);
     } catch (error) {
       console.log(error);
@@ -80,7 +82,7 @@ setBooks(books);
   return (
     <FlatList
       data={books}
-      keyExtractor={(item) => item._id}
+      keyExtractor={(item, index) => item?._id ?? index.toString()}
       ListHeaderComponent={
         <Text style={styles.heading}>
           ❤️ My Wishlist

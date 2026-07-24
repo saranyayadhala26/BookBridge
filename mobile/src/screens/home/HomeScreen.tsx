@@ -75,7 +75,7 @@ export default function HomeScreen() {
   return (
     <FlatList
       data={filteredBooks}
-      keyExtractor={(item) => item._id}
+      keyExtractor={(item, index) => item?._id ?? index.toString()}
       keyboardShouldPersistTaps="handled"
       refreshControl={
         <RefreshControl

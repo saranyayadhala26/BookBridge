@@ -7,14 +7,13 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginUser } from "../../services/authService";
-
+import { useAuth } from "../../context/AuthContext";
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const { login } = useAuth();
   const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert("Error", "Please enter email and password");
@@ -25,13 +24,8 @@ export default function LoginScreen({ navigation }: any) {
       setLoading(true);
 
       const data = await loginUser(email, password);
-
-      await AsyncStorage.setItem("token", data.token);
-      await AsyncStorage.setItem("user", JSON.stringify(data.user));
-
+      await login(data.token, data.user);
       Alert.alert("Success", "Login Successful");
-
-      navigation.replace("Main");
 
     } catch (error: any) {
       Alert.alert(

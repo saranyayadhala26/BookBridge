@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AuthNavigator from "./AuthNavigator";
 import BottomTabs from "./BottomTabs";
 import BookDetailsScreen from "../screens/books/BookDetailsScreen";
+import EditBookScreen from "../screens/books/EditBookScreen";
 import { useAuth } from "../context/AuthContext";
 
 const Stack = createNativeStackNavigator();
@@ -40,9 +41,13 @@ export default function AppNavigator() {
       <Stack.Screen
         name="BookDetails"
         component={BookDetailsScreen}
-        options={{
-          title: "Book Details",
-        }}
+        options={{ title: "Book Details" }}
+      />
+
+      <Stack.Screen
+        name="EditBook"
+        component={EditBookScreen}
+        options={{ title: "Edit Book" }}
       />
     </Stack.Navigator>
   );
