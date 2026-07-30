@@ -2,18 +2,30 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
   StyleSheet,
+  TouchableOpacity,
   Alert,
+  SafeAreaView,
+  StatusBar,
+  Image,
+  ScrollView,
 } from "react-native";
+
+import { LinearGradient } from "expo-linear-gradient";
+
 import { loginUser } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
+
+import AuthInput from "../../components/AuthInput";
+
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
+
   const { login } = useAuth();
+
   const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert("Error", "Please enter email and password");
@@ -24,9 +36,10 @@ export default function LoginScreen({ navigation }: any) {
       setLoading(true);
 
       const data = await loginUser(email, password);
-      await login(data.token, data.user);
-      Alert.alert("Success", "Login Successful");
 
+      await login(data.token, data.user);
+
+      Alert.alert("Success", "Login Successful");
     } catch (error: any) {
       Alert.alert(
         "Login Failed",
@@ -38,86 +51,217 @@ export default function LoginScreen({ navigation }: any) {
   };
 
   return (
-    <View style={styles.container}>
-
-      <Text style={styles.title}>BookBridge</Text>
-
-      <TextInput
-        placeholder="Email"
-        style={styles.input}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
-
-      <TextInput
-        placeholder="Password"
-        style={styles.input}
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleLogin}
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="#2563EB"
       >
-        <Text style={styles.buttonText}>
-          {loading ? "Logging In..." : "Login"}
-        </Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Register")}
+      </StatusBar>
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
       >
-        <Text style={styles.link}>
-          Don't have an account? Register
-        </Text>
-      </TouchableOpacity>
+    <LinearGradient
+  colors={["#2563EB", "#4F46E5"]}
+  style={styles.header}
+>
+  <Image
+    source={require("../../../assets/logo.png")}
+    style={styles.logo}
+    resizeMode="contain"
+  />
 
-    </View>
-  );
+  <Text style={styles.appName}>
+    BookBridge
+  </Text>
+
+  <Text style={styles.tagline}>
+    Books Connect. Minds Grow.
+  </Text>
+</LinearGradient>
+
+<View style={styles.card}>
+
+  <Text style={styles.subtitle}>
+    Sign in to continue
+  </Text>
+
+  <Text style={styles.label}>
+    Email Address
+  </Text>
+
+  <AuthInput
+    placeholder="Enter your email"
+    icon="email"
+    value={email}
+    onChangeText={setEmail}
+    keyboardType="email-address"
+  />
+
+  <Text style={styles.label}>
+    Password
+  </Text>
+
+  <AuthInput
+    placeholder="Enter your password"
+    icon="lock"
+    value={password}
+    onChangeText={setPassword}
+    secureTextEntry
+  />
+
+  <TouchableOpacity>
+    <Text style={styles.forgot}>
+      Forgot Password?
+    </Text>
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    style={styles.loginButton}
+    onPress={handleLogin}
+  >
+    <Text style={styles.loginText}>
+      {loading ? "Signing In..." : "SIGN IN"}
+    </Text>
+  </TouchableOpacity>
+
+  <View style={styles.footer}>
+
+    <Text style={styles.footerText}>
+      Don't have an account?
+    </Text>
+
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Register")}
+    >
+      <Text style={styles.register}>
+        Create Account
+      </Text>
+    </TouchableOpacity>
+
+  </View>
+
+</View>
+
+</ScrollView>
+
+</SafeAreaView>
+);
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
+    backgroundColor: "#F8FAFC",
+  },
+
+  header: {
+    height: 300,
     justifyContent: "center",
-    padding: 25,
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 34,
-    fontWeight: "bold",
-    marginBottom: 40,
-    textAlign: "center",
-    color: "#2563EB",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 15,
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: "#2563EB",
-    padding: 15,
-    borderRadius: 10,
     alignItems: "center",
-    marginTop: 10,
+    borderBottomLeftRadius: 35,
+    borderBottomRightRadius: 35,
   },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
+
+  logo: {
+    width: 110,
+    height: 110,
+    marginBottom: 18,
   },
-  link: {
-    textAlign: "center",
-    marginTop: 20,
+
+  appName: {
+    color: "#FFFFFF",
+    fontSize: 34,
+    fontWeight: "800",
+    letterSpacing: 0.5,
+  },
+
+  tagline: {
+    color: "#E5E7EB",
+    marginTop: 8,
+    fontSize: 15,
+  },
+
+  card: {
+    backgroundColor: "#FFFFFF",
+    marginHorizontal: 20,
+    marginTop: -40,
+    borderRadius: 24,
+    padding: 24,
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+  },
+
+  welcome: {
+    fontSize: 28,
+    fontWeight: "700",
+    color: "#111827",
+  },
+
+  subtitle: {
+    fontSize: 15,
+    color: "#6B7280",
+    marginTop: 6,
+    marginBottom: 28,
+  },
+
+  label: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#374151",
+    marginBottom: 8,
+    marginTop: 14,
+  },
+
+  forgot: {
+    alignSelf: "flex-end",
     color: "#2563EB",
     fontWeight: "600",
+    marginTop: 10,
+    marginBottom: 26,
+  },
+
+  loginButton: {
+    height: 56,
+    backgroundColor: "#2563EB",
+    borderRadius: 16,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  loginText: {
+    color: "#FFFFFF",
+    fontSize: 17,
+    fontWeight: "700",
+    letterSpacing: 1,
+  },
+
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 28,
+  },
+
+  footerText: {
+    color: "#6B7280",
+    fontSize: 15,
+  },
+
+  register: {
+    color: "#2563EB",
+    fontWeight: "700",
+    fontSize: 15,
+    marginLeft: 6,
   },
 });

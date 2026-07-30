@@ -1,6 +1,6 @@
 import { ActivityIndicator, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import NearbyBooksScreen from "../screens/NearbyBooksScreen";
 import AuthNavigator from "./AuthNavigator";
 import BottomTabs from "./BottomTabs";
 import BookDetailsScreen from "../screens/books/BookDetailsScreen";
@@ -37,6 +37,14 @@ export default function AppNavigator() {
         component={BottomTabs}
         options={{ headerShown: false }}
       />
+      
+      <Stack.Screen
+  name="NearbyBooks"
+  component={NearbyBooksScreen}
+  options={{
+    title: "Nearby Books",
+  }}
+/>
 
       <Stack.Screen
         name="BookDetails"

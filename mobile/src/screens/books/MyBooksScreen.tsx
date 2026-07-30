@@ -145,11 +145,13 @@ const styles = StyleSheet.create({
   },
 
   heading: {
-    fontSize: 26,
-    fontWeight: "bold",
-    margin: 20,
-    color: "#111827",
-  },
+  fontSize: 28,
+  fontWeight: "800",
+  color: "#111827",
+  marginTop: 20,
+  marginHorizontal: 20,
+  marginBottom: 10,
+},
 
   empty: {
     textAlign: "center",
@@ -159,35 +161,55 @@ const styles = StyleSheet.create({
   },
 
   cardContainer: {
-  marginBottom: 20,
+  marginBottom: 22,
 },
 
 deleteButton: {
   flex: 1,
-  backgroundColor: "#DC2626",
-  paddingVertical: 10,
-  borderRadius: 8,
+  backgroundColor: "#EF4444",
+  paddingVertical: 13,
+  borderRadius: 12,
   alignItems: "center",
+
+  elevation: 3,
+
+  shadowColor: "#000",
+  shadowOpacity: 0.08,
+  shadowRadius: 6,
+  shadowOffset: {
+    width: 0,
+    height: 3,
+  },
 },
 
 buttonText: {
   color: "#FFFFFF",
-  fontWeight: "bold",
-  fontSize: 16,
+  fontWeight: "700",
+  fontSize: 15,
 },
 
 buttonRow: {
   flexDirection: "row",
   marginHorizontal: 20,
-  marginTop: 8,
-  gap: 10,
+  marginTop: 12,
+  gap: 12,
 },
 
 editButton: {
   flex: 1,
   backgroundColor: "#2563EB",
-  paddingVertical: 10,
-  borderRadius: 8,
+  paddingVertical: 13,
+  borderRadius: 12,
   alignItems: "center",
+
+  elevation: 3,
+
+  shadowColor: "#000",
+  shadowOpacity: 0.08,
+  shadowRadius: 6,
+  shadowOffset: {
+    width: 0,
+    height: 3,
+  },
 },
 });
