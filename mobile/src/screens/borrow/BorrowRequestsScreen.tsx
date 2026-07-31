@@ -106,9 +106,24 @@ setLent(
           ) : (
             lent.map((item) => (
               <View key={item._id} style={styles.card}>
-                <Text style={styles.title}>{item.book?.title}</Text>
-                <Text>Borrower: {item.borrower?.fullName}</Text>
-                <Text>Status: {item.status}</Text>
+                <Text style={styles.title}>📖 {item.book?.title}</Text>
+                <Text style={styles.borrower}>👤 {item.borrower?.fullName}</Text>
+                <View
+  style={[
+    styles.statusBadge,
+    item.status === "Pending"
+      ? styles.pending
+      : item.status === "Accepted"
+      ? styles.accepted
+      : item.status === "Rejected"
+      ? styles.rejected
+      : styles.returned,
+  ]}
+>
+  <Text style={styles.statusText}>
+    {item.status}
+  </Text>
+</View>
 
                 {item.status === "Pending" && (
                   <View style={styles.row}>
@@ -141,7 +156,22 @@ setLent(
       renderItem={({ item }) => (
         <View style={styles.card}>
           <Text style={styles.title}>{item.book?.title}</Text>
-          <Text>Status: {item.status}</Text>
+          <View
+  style={[
+    styles.statusBadge,
+    item.status === "Pending"
+      ? styles.pending
+      : item.status === "Accepted"
+      ? styles.accepted
+      : item.status === "Rejected"
+      ? styles.rejected
+      : styles.returned,
+  ]}
+>
+  <Text style={styles.statusText}>
+    {item.status}
+  </Text>
+</View>
 
           {item.status === "Accepted" && (
             <TouchableOpacity
@@ -154,7 +184,17 @@ setLent(
         </View>
       )}
       ListEmptyComponent={
-        <Text style={styles.empty}>No borrowed books.</Text>
+        <View style={styles.emptyContainer}>
+  <Text style={styles.emptyIcon}>📚</Text>
+
+  <Text style={styles.emptyTitle}>
+    No borrowed books yet
+  </Text>
+
+  <Text style={styles.emptySubtitle}>
+    Browse books and send a request.
+  </Text>
+</View>
       }
     />
   );
@@ -229,4 +269,58 @@ const styles = StyleSheet.create({
     color: "#6B7280",
     marginBottom: 20,
   },
+
+  statusBadge: {
+  alignSelf: "flex-start",
+  paddingHorizontal: 10,
+  paddingVertical: 5,
+  borderRadius: 20,
+  marginTop: 10,
+},
+
+pending: {
+  backgroundColor: "#FEF3C7",
+},
+
+accepted: {
+  backgroundColor: "#DCFCE7",
+},
+
+rejected: {
+  backgroundColor: "#FEE2E2",
+},
+
+returned: {
+  backgroundColor: "#DBEAFE",
+},
+
+statusText: {
+  textAlign: "center",
+  fontWeight: "600",
+},
+
+borrower: {
+  color: "#4B5563",
+  marginTop: 5,
+},
+
+emptyContainer: {
+  alignItems: "center",
+  marginTop: 40,
+},
+
+emptyIcon: {
+  fontSize: 40,
+},
+
+emptyTitle: {
+  fontSize: 16,
+  fontWeight: "600",
+  marginTop: 10,
+},
+
+emptySubtitle: {
+  color: "#6B7280",
+  marginTop: 5,
+},
 });

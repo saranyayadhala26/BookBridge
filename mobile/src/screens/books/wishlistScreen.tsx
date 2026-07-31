@@ -127,10 +127,18 @@ setBooks(books);
   </View>
 )}
       ListEmptyComponent={
-        <Text style={styles.empty}>
-          Your wishlist is empty.
-        </Text>
-      }
+  <View style={styles.emptyContainer}>
+    <Text style={styles.emptyIcon}>❤️</Text>
+
+    <Text style={styles.emptyTitle}>
+      Your wishlist is empty
+    </Text>
+
+    <Text style={styles.emptySubtitle}>
+      Save books to read later.
+    </Text>
+  </View>
+}
     />
   );
 }
@@ -155,4 +163,25 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#6B7280",
   },
+
+  emptyContainer: {
+  alignItems: "center",
+  marginTop: 220,
+},
+
+emptyIcon: {
+  fontSize: 40,
+},
+
+emptyTitle: {
+  fontSize: 18,
+  fontWeight: "600",
+  marginTop: 10,
+  color: "#111827",
+},
+
+emptySubtitle: {
+  color: "#6B7280",
+  marginTop: 5,
+},
 });

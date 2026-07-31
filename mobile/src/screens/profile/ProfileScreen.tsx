@@ -9,7 +9,9 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 export default function ProfileScreen() {
+  const navigation = useNavigation<any>();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
   const { logout } = useAuth();
@@ -64,7 +66,12 @@ export default function ProfileScreen() {
     <View style={styles.container}>
       <View style={styles.avatar}>
         <Text style={styles.avatarText}>
-          {user?.fullName?.charAt(0)?.toUpperCase() || "U"}
+          {user?.fullName
+  ?.split(" ")
+  .map((n: string) => n[0])
+  .join("")
+  .substring(0, 2)
+  .toUpperCase()}
         </Text>
       </View>
 
@@ -76,14 +83,44 @@ export default function ProfileScreen() {
         {user?.email}
       </Text>
 
-      <View style={styles.card}>
-        <Text style={styles.label}>Full Name</Text>
-        <Text style={styles.value}>{user?.fullName}</Text>
-      </View>
+      <View style={styles.trustCard}>
+  <Text style={styles.trustTitle}>
+    ⭐ Trust Score
+  </Text>
 
-      <View style={styles.card}>
-  <Text style={styles.label}>Email</Text>
-  <Text style={styles.value}>{user?.email}</Text>
+  <Text style={styles.trustScore}>
+    {user?.trustScore || 100}/100
+  </Text>
+
+  <Text style={styles.trustStatus}>
+    Trusted Reader
+  </Text>
+</View>
+
+      <View style={styles.menuContainer}>
+
+  <TouchableOpacity style={styles.menuItem}>
+    <Text style={styles.menuText}>📚 My Books</Text>
+    <Text style={styles.arrow}>›</Text>
+  </TouchableOpacity>
+
+  <TouchableOpacity style={styles.menuItem}
+  onPress={() => navigation.navigate("Wishlist")}>
+    <Text style={styles.menuText}>❤️ My Wishlist</Text>
+    <Text style={styles.arrow}>›</Text>
+  </TouchableOpacity>
+
+  <TouchableOpacity style={styles.menuItem}>
+    <Text style={styles.menuText}>🔔 Notifications</Text>
+    <Text style={styles.arrow}>›</Text>
+  </TouchableOpacity>
+
+  <TouchableOpacity style={styles.menuItem}
+   onPress={() => navigation.navigate("EditProfile")}>
+    <Text style={styles.menuText}>✏️ Edit Profile</Text>
+    <Text style={styles.arrow}>›</Text>
+  </TouchableOpacity>
+
 </View>
 
 <TouchableOpacity
@@ -173,5 +210,59 @@ logoutText: {
   color: "#FFFFFF",
   fontSize: 18,
   fontWeight: "bold",
+},
+
+menuContainer: {
+  width: "100%",
+  marginTop: 20,
+},
+
+menuItem: {
+  backgroundColor: "#FFFFFF",
+  borderRadius: 12,
+  padding: 18,
+  marginBottom: 12,
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+  elevation: 2,
+},
+
+menuText: {
+  fontSize: 16,
+  fontWeight: "600",
+  color: "#111827",
+},
+
+arrow: {
+  fontSize: 22,
+  color: "#9CA3AF",
+},
+
+trustCard: {
+  backgroundColor: "#FFFFFF",
+  padding: 16,
+  borderRadius: 12,
+  width: "100%",
+  alignItems: "center",
+  marginBottom: 20,
+  elevation: 2,
+},
+
+trustTitle: {
+  fontSize: 16,
+  fontWeight: "600",
+},
+
+trustScore: {
+  fontSize: 28,
+  fontWeight: "bold",
+  color: "#2563EB",
+  marginTop: 5,
+},
+
+trustStatus: {
+  color: "#6B7280",
+  marginTop: 4,
 },
 });

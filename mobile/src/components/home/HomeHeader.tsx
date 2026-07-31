@@ -18,7 +18,7 @@ export default function HomeHeader({ userName }: Props) {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingTop: 10,
+    paddingTop: 50,
     paddingBottom: 35,
   },
 
@@ -28,4 +28,16 @@ const styles = StyleSheet.create({
     color: "#111827",
     paddingTop: 10,
   },
+
+  notificationButton: {
+  width: 40,
+  height: 40,
+  borderRadius: 20,
+  backgroundColor: "#EFF6FF",
+  justifyContent: "center",
+  alignItems: "center",
+},
+notificationIcon: {
+  fontSize: 20,
+},
 });

@@ -129,10 +129,31 @@ export default function MyBooksScreen() {
 )}
 
       ListEmptyComponent={
-        <Text style={styles.empty}>
-          You haven't added any books yet.
-        </Text>
+  <View style={styles.emptyContainer}>
+    <Text style={styles.emptyIcon}>
+      📖
+    </Text>
+
+    <Text style={styles.emptyTitle}>
+      No books added yet
+    </Text>
+
+    <Text style={styles.emptySubtitle}>
+      Start building your personal library
+    </Text>
+
+    <TouchableOpacity
+      style={styles.addButton}
+      onPress={() =>
+        navigation.navigate("Add")
       }
+    >
+      <Text style={styles.addButtonText}>
+        + Add Your First Book
+      </Text>
+    </TouchableOpacity>
+  </View>
+}
     />
   );
 }
@@ -193,6 +214,46 @@ buttonRow: {
   marginHorizontal: 20,
   marginTop: 12,
   gap: 12,
+},
+
+emptyContainer: {
+  alignItems: "center",
+  marginTop: 80,
+  paddingHorizontal: 30,
+},
+
+emptyIcon: {
+  fontSize: 70,
+},
+
+emptyTitle: {
+  fontSize: 24,
+  fontWeight: "700",
+  color: "#111827",
+  marginTop: 20,
+},
+
+emptySubtitle: {
+  fontSize: 16,
+  color: "#6B7280",
+  textAlign: "center",
+  marginTop: 10,
+  marginBottom: 30,
+},
+
+addButton: {
+  backgroundColor: "#2563EB",
+  paddingHorizontal: 24,
+  paddingVertical: 14,
+  borderRadius: 14,
+
+  elevation: 4,
+},
+
+addButtonText: {
+  color: "#FFFFFF",
+  fontSize: 16,
+  fontWeight: "700",
 },
 
 editButton: {

@@ -197,6 +197,18 @@ if (borrowRequest.status !== "Accepted") {
 borrowRequest.status = "Returned";
 await borrowRequest.save();
 
+const User = require("../models/user");
+
+await User.findByIdAndUpdate(
+  borrowRequest.borrower,
+  {
+    $inc: {
+      trustScore: 5,
+      booksBorrowed: 1,
+    },
+  }
+);
+
 borrowRequest.book.availability = true;
 await borrowRequest.book.save();
     return res.status(200).json({

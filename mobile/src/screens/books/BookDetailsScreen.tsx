@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 
-import { requestBorrow } from "../../services/borrowService";
+import { requestBook } from "../../services/borrowService";
 import { addToWishlist } from "../../services/wishlistService";
 
 export default function BookDetailsScreen({ route }: any) {
@@ -16,7 +16,7 @@ export default function BookDetailsScreen({ route }: any) {
 
   const handleBorrow = async () => {
   try {
-    const response = await requestBorrow(book._id);
+    const response = await requestBook(book._id);
 
     Alert.alert(
       "Success",
@@ -64,23 +64,39 @@ const handleWishlist = async () => {
         <Text style={styles.title}>{book.title}</Text>
 
         <Text style={styles.author}>
-          by {book.author}
+          👤 {book.author}
         </Text>
 
         <View style={styles.badge}>
           <Text style={styles.badgeText}>{book.category}</Text>
         </View>
 
-        <Text style={styles.label}>Condition</Text>
+        <Text style={styles.label}>⭐ Condition</Text>
         <Text style={styles.value}>{book.condition}</Text>
 
-        <Text style={styles.label}>Location</Text>
+        <Text style={styles.label}>📍 Location</Text>
         <Text style={styles.value}>{book.location || "Unknown"}</Text>
 
-        <Text style={styles.label}>Description</Text>
+        <Text style={styles.label}>📝 Description</Text>
         <Text style={styles.value}>
           {book.description || "No description available."}
         </Text>
+
+        <Text style={styles.label}>
+  📖 Book Passport
+</Text>
+
+<Text style={styles.value}>
+  Owner: {book.owner?.fullName || "BookBridge User"}
+</Text>
+
+<Text style={styles.value}>
+  Borrow Count: {book.borrowCount || 0}
+</Text>
+
+<Text style={styles.value}>
+  Status: {book.availability ? "Available" : "Borrowed"}
+</Text>
 
         <View style={styles.buttonContainer}>
   <TouchableOpacity
@@ -106,7 +122,11 @@ const handleWishlist = async () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FAFB",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    padding: 16,
+    marginTop: 0,
+    elevation: 2,
   },
 
   image: {

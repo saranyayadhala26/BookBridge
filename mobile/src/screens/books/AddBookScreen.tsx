@@ -10,6 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { addBook } from "../../services/addBookService";
 
 export default function AddBookScreen({ navigation }: any) {
@@ -84,9 +85,15 @@ export default function AddBookScreen({ navigation }: any) {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container}
-    >
+    <SafeAreaView style={{ flex: 1 }}>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.heading}>
+  📚 Add New Book
+</Text>
+
+<Text style={styles.subtitle}>
+  Share your books with the BookBridge community
+</Text>
       <TouchableOpacity
         style={styles.imagePicker}
         onPress={pickImage}
@@ -97,7 +104,15 @@ export default function AddBookScreen({ navigation }: any) {
             style={styles.image}
           />
         ) : (
-          <Text>Select Cover Image</Text>
+          <View style={styles.uploadContent}>
+  <Text style={styles.uploadIcon}>
+    📷
+  </Text>
+
+  <Text style={styles.uploadText}>
+    Tap to upload cover image
+  </Text>
+</View>
         )}
       </TouchableOpacity>
 
@@ -117,23 +132,26 @@ export default function AddBookScreen({ navigation }: any) {
 
       <TextInput
         style={styles.input}
-        placeholder="Category"
+        placeholder="Programming, Novel, Science..."
         value={category}
         onChangeText={setCategory}
       />
 
       <TextInput
-        style={styles.input}
-        placeholder="Description"
-        value={description}
-        onChangeText={setDescription}
-      />
+  style={[styles.input, styles.descriptionInput]}
+  placeholder="Description"
+  value={description}
+  onChangeText={setDescription}
+  multiline
+  textAlignVertical="top"
+/>
 
       <TextInput
         style={styles.input}
-        placeholder="Condition"
+        placeholder="New, Good, Fair..."
         value={condition}
-        onChangeText={setCondition}
+        onChangeText={setDescription}
+        
       />
 
       <TextInput
@@ -149,17 +167,32 @@ export default function AddBookScreen({ navigation }: any) {
         disabled={loading}
       >
         <Text style={styles.buttonText}>
-          {loading ? "Uploading..." : "Add Book"}
+         {loading ? "Uploading..." : "📚 Publish Book"}
         </Text>
       </TouchableOpacity>
     </ScrollView>
+  </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-  },
+  paddingHorizontal: 20,
+  paddingBottom: 40,
+},
+  heading: {
+  fontSize: 28,
+  fontWeight: "800",
+  color: "#111827",
+  marginTop: 20,
+},
+
+subtitle: {
+  fontSize: 15,
+  color: "#6B7280",
+  marginTop: 6,
+  marginBottom: 24,
+},
 
   imagePicker: {
     height: 220,
@@ -170,6 +203,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
     overflow: "hidden",
+    borderStyle: "dashed",
   },
 
   image: {
@@ -185,6 +219,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
 
+  descriptionInput: {
+  height: 110,
+  paddingTop: 12,
+},
+
   button: {
     backgroundColor: "#2563EB",
     padding: 15,
@@ -198,4 +237,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+
+  uploadContent: {
+  alignItems: "center",
+},
+
+uploadIcon: {
+  fontSize: 42,
+  marginBottom: 10,
+},
+
+uploadText: {
+  fontSize: 16,
+  color: "#6B7280",
+},
 });
