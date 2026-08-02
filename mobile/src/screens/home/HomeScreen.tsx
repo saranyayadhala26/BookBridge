@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -109,9 +110,11 @@ return (
 
     <SearchBar
       value={search}
-      onChangeText={async (text) => {
-        setSearch(text);
-
+      onChatPress ={() => 
+        navigation.navigate("Chat")
+      }
+        onChangeText={async (text) => {
+          setSearch(text);
         if (text.trim() === "") {
           setFilteredBooks(books);
           return;
@@ -122,10 +125,11 @@ return (
           setFilteredBooks(data.books);
         } catch (error) {
           console.log(error);
-        }
+        }        
       }}
     />
 
+    {search.trim() === "" && (
     <NearbyBooks
   books={nearbyBooks.slice(0, 3)}
   onBookPress={(book) =>
@@ -137,26 +141,76 @@ return (
     navigation.navigate("NearbyBooks")
   }
 />
+)}
 
-    <CategoryGrid
-      onCategoryPress={(category) => {
-        if (category === "Others") {
-  setFilteredBooks(books);
-  return;
-}
+{search.trim() === "" && (
+  <CategoryGrid
+    onCategoryPress={(category) => {
+      if (category === "Others") {
+        setFilteredBooks(books);
+        return;
+      }
 
-        const filtered = books.filter(
-          (book) => book.category === category
-        );
+      const filtered = books.filter(
+        (book) => book.category === category
+      );
 
-        setFilteredBooks(filtered);
-      }}
-    />
-  </>
-}
-renderItem={() => null}
+      setFilteredBooks(filtered);
+    }}
   />
-  
+)}
+
+</>
+    }
+
+renderItem={({ item }) =>
+  search.trim() !== "" ? (
+    <BookCard
+      title={item.title}
+      author={item.author}
+      category={item.category}
+      condition={item.condition}
+      location={item.location}
+      coverImage={item.coverImage}
+      onPress={() =>
+        navigation.navigate("BookDetails", {
+          book: item,
+        })
+      }
+    />
+  ) : null
+}
+
+ListEmptyComponent={
+  search.trim() !== "" ? (
+    <View
+      style={{
+        alignItems: "center",
+        marginTop: 50,
+      }}
+    >
+      <Text style={{ fontSize: 50 }}>📚</Text>
+
+      <Text
+        style={{
+          fontSize: 18,
+          fontWeight: "600",
+        }}
+      >
+        No Books Found
+      </Text>
+
+      <Text
+        style={{
+          color: "#6B7280",
+        }}
+      >
+        Try another keyword
+      </Text>
+    </View>
+  ) : null
+}
+  />
 );
 }
 

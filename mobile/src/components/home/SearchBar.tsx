@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { Keyboard } from "react-native";
 
 type Props = {
   value: string;
@@ -29,12 +30,16 @@ export default function SearchBar({
         />
 
         <TextInput
-          placeholder="Search books..."
-          placeholderTextColor="#9CA3AF"
-          value={value}
-          onChangeText={onChangeText}
-          style={styles.input}
-        />
+  value={value}
+  onChangeText={onChangeText}
+  placeholder="Search books..."
+  returnKeyType="search"
+  onSubmitEditing={() => {
+    Keyboard.dismiss();
+  }}
+
+  blurOnSubmit={true}
+/>
 
       </View>
 

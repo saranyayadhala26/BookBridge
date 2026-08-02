@@ -12,7 +12,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { addBook } from "../../services/addBookService";
-
+import { Picker } from "@react-native-picker/picker";
 export default function AddBookScreen({ navigation }: any) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -115,7 +115,9 @@ export default function AddBookScreen({ navigation }: any) {
 </View>
         )}
       </TouchableOpacity>
-
+      <Text style={styles.label}>
+  📖 Book Title
+</Text>
       <TextInput
         style={styles.input}
         placeholder="Title"
@@ -123,6 +125,9 @@ export default function AddBookScreen({ navigation }: any) {
         onChangeText={setTitle}
       />
 
+      <Text style={styles.label}>
+  ✍️ Author
+</Text>
       <TextInput
         style={styles.input}
         placeholder="Author"
@@ -130,13 +135,31 @@ export default function AddBookScreen({ navigation }: any) {
         onChangeText={setAuthor}
       />
 
-      <TextInput
-        style={styles.input}
-        placeholder="Programming, Novel, Science..."
-        value={category}
-        onChangeText={setCategory}
-      />
+      <Text style={styles.label}>📚 Category</Text>
 
+<View style={styles.pickerContainer}>
+  <Picker
+    selectedValue={category}
+    onValueChange={(itemValue) => setCategory(itemValue)}
+  >
+    <Picker.Item label="Select Category" value="" />
+
+    <Picker.Item label="Novel" value="Novel" />
+    <Picker.Item label="Programming" value="Programming" />
+    <Picker.Item label="Science" value="Science" />
+    <Picker.Item label="Self Help" value="Self Help" />
+    <Picker.Item label="Biography" value="Biography" />
+    <Picker.Item label="History" value="History" />
+    <Picker.Item label="Technology" value="Technology" />
+    <Picker.Item label="Education" value="Education" />
+    <Picker.Item label="Business" value="Business" />
+    <Picker.Item label="Other" value="Other" />
+  </Picker>
+</View>
+
+<Text style={styles.label}>
+  📝 Description
+</Text>
       <TextInput
   style={[styles.input, styles.descriptionInput]}
   placeholder="Description"
@@ -146,14 +169,25 @@ export default function AddBookScreen({ navigation }: any) {
   textAlignVertical="top"
 />
 
-      <TextInput
-        style={styles.input}
-        placeholder="New, Good, Fair..."
-        value={condition}
-        onChangeText={setDescription}
-        
-      />
+      <Text style={styles.label}>⭐ Condition</Text>
 
+<View style={styles.pickerContainer}>
+  <Picker
+    selectedValue={condition}
+    onValueChange={(itemValue) => setCondition(itemValue)}
+  >
+    <Picker.Item label="Select Condition" value="" />
+    <Picker.Item label="New" value="New" />
+    <Picker.Item label="Like New" value="Like New" />
+    <Picker.Item label="Good" value="Good" />
+    <Picker.Item label="Fair" value="Fair" />
+    <Picker.Item label="Poor" value="Poor" />
+  </Picker>
+</View>
+
+<Text style={styles.label}>
+  📍 Location
+</Text>
       <TextInput
         style={styles.input}
         placeholder="Location"
@@ -184,7 +218,8 @@ const styles = StyleSheet.create({
   fontSize: 28,
   fontWeight: "800",
   color: "#111827",
-  marginTop: 20,
+  marginTop: 0,
+  marginBottom: 10,
 },
 
 subtitle: {
@@ -250,5 +285,22 @@ uploadIcon: {
 uploadText: {
   fontSize: 16,
   color: "#6B7280",
+},
+
+pickerContainer: {
+  borderWidth: 1,
+  borderColor: "#E5E7EB",
+  borderRadius: 10,
+  marginBottom: 15,
+  backgroundColor: "#fff",
+},
+
+
+label: {
+  fontSize: 14,
+  fontWeight: "600",
+  color: "#374151",
+  marginBottom: 6,
+  marginTop: 10,
 },
 });

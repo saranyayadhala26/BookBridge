@@ -53,11 +53,13 @@ const handleWishlist = async () => {
   return (
     <ScrollView style={styles.container}>
       {book.coverImage ? (
-        <Image source={{ uri: book.coverImage }} style={styles.image} />
+        <Image source={{ uri: book.coverImage }} style={styles.CoverImage} />
       ) : (
         <View style={styles.placeholder}>
           <Text style={styles.placeholderText}>📚</Text>
-        </View>
+          <Text style={styles.noImageTitle}>No Cover Image</Text>
+          <Text style={styles.noImageSubTitle}>Book cover not available</Text>
+          </View>
       )}
 
       <View style={styles.content}>
@@ -81,23 +83,33 @@ const handleWishlist = async () => {
         <Text style={styles.value}>
           {book.description || "No description available."}
         </Text>
+    <View style={styles.passportCard}>
+  <Text style={styles.passportTitle}>
+    📖 Book Passport
+  </Text>
 
-        <Text style={styles.label}>
-  📖 Book Passport
-</Text>
+  <View style={styles.infoRow}>
+    <Text style={styles.infoLabel}>👤 Owner</Text>
+    <Text style={styles.infoValue}>
+      {book.owner?.fullName || "BookBridge User"}
+    </Text>
+  </View>
 
-<Text style={styles.value}>
-  Owner: {book.owner?.fullName || "BookBridge User"}
-</Text>
+  <View style={styles.infoRow}>
+    <Text style={styles.infoLabel}>📚 Borrow Count</Text>
+    <Text style={styles.infoValue}>
+      {book.borrowCount || 0}
+    </Text>
+  </View>
 
-<Text style={styles.value}>
-  Borrow Count: {book.borrowCount || 0}
-</Text>
-
-<Text style={styles.value}>
-  Status: {book.availability ? "Available" : "Borrowed"}
-</Text>
-
+  <View style={styles.infoRow}>
+    <Text style={styles.infoLabel}>✅ Status</Text>
+    <Text style={styles.infoValue}>
+      {book.availability ? "Available" : "Borrowed"}
+    </Text>
+  </View>
+</View>
+</View>
         <View style={styles.buttonContainer}>
   <TouchableOpacity
     style={styles.borrowButton}
@@ -113,8 +125,6 @@ const handleWishlist = async () => {
     <Text style={styles.buttonText}>❤️ Add to Wishlist</Text>
   </TouchableOpacity>
 </View>
-
-      </View>
     </ScrollView>
   );
 }
@@ -129,17 +139,19 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
 
-  image: {
+  CoverImage: {
     width: "100%",
-    height: 300,
+    height: 260,
     resizeMode: "cover",
+    borderRadius:16,
   },
 
   placeholder: {
-    height: 300,
+    height: 220,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#E5E7EB",
+    borderRadius:  20,
   },
 
   placeholderText: {
@@ -147,13 +159,15 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    padding: 20,
+    padding: 16,
+    marginTop:5,
   },
 
   title: {
     fontSize: 28,
     fontWeight: "bold",
     color: "#111827",
+
   },
 
   author: {
@@ -193,6 +207,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
   marginTop: 30,
   gap: 15,
+  marginBottom:30,
 },
 
 borrowButton: {
@@ -213,5 +228,50 @@ buttonText: {
   color: "#FFFFFF",
   fontSize: 16,
   fontWeight: "bold",
+},
+
+noImageTitle: {
+  fontSize: 18,
+  fontWeight: "bold",
+  color: "#374151",
+  marginTop: 10,
+},
+
+noImageSubTitle: {
+  fontSize: 14,
+  color: "#6B7280",
+  marginTop: 5,
+},
+
+passportCard: {
+  backgroundColor: "#F8FAFC",
+  borderRadius: 16,
+  padding: 18,
+  marginTop: 20,
+  borderWidth: 1,
+  borderColor: "#E2E8F0",
+},
+
+passportTitle: {
+  fontSize: 18,
+  fontWeight: "bold",
+  color: "#111827",
+  marginBottom: 15,
+},
+
+infoRow: {
+  marginBottom: 12,
+},
+
+infoLabel: {
+  fontSize: 14,
+  color: "#6B7280",
+  marginBottom: 4,
+},
+
+infoValue: {
+  fontSize: 16,
+  fontWeight: "600",
+  color: "#111827",
 },
 });

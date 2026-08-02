@@ -17,7 +17,7 @@ import {
   returnBorrowedBook,
 } from "../../services/borrowService";
 
-export default function BorrowRequestsScreen() {
+export default function BorrowRequestsScreen({navigation}: any) {
   const [loading, setLoading] = useState(true);
   const [borrowed, setBorrowed] = useState<any[]>([]);
   const [lent, setLent] = useState<any[]>([]);
@@ -28,7 +28,8 @@ export default function BorrowRequestsScreen() {
 
       const borrowedData = await getMyBorrowedBooks();
       const lentData = await getMyLentBooks();
-
+      console.log("LENT DATA:", JSON.stringify(lentData, null, 2));
+      
       setBorrowed(
   (borrowedData.borrowRequests || []).filter(
     (item: any) => item && item._id
@@ -106,8 +107,23 @@ setLent(
           ) : (
             lent.map((item) => (
               <View key={item._id} style={styles.card}>
-                <Text style={styles.title}>📖 {item.book?.title}</Text>
-                <Text style={styles.borrower}>👤 {item.borrower?.fullName}</Text>
+                <Text style={styles.title}>📖 {item.book?.title || "Book Request"}</Text>
+                
+                <TouchableOpacity
+  onPress={() => {
+    console.log("Borrower Data:", item.borrower);
+
+    navigation.navigate("BorrowerProfile", {
+      borrower: item.borrower,
+    });
+  }}
+>
+
+ <Text style={styles.borrowerName}>
+  👤 {item.borrower?.fullName || "Reader"}
+</Text>
+
+</TouchableOpacity>
                 <View
   style={[
     styles.statusBadge,
@@ -121,7 +137,13 @@ setLent(
   ]}
 >
   <Text style={styles.statusText}>
-    {item.status}
+    {item.status === "Pending"
+      ? "🟡 Pending"
+      : item.status === "Accepted"
+      ? "🟢 Accepted"
+      : item.status === "Rejected"
+      ? "🔴 Rejected"
+      : "🔵 Returned"}
   </Text>
 </View>
 
@@ -155,7 +177,7 @@ setLent(
       
       renderItem={({ item }) => (
         <View style={styles.card}>
-          <Text style={styles.title}>{item.book?.title}</Text>
+          <Text style={styles.title}>{item.book?.title || "Book Request"}</Text>
           <View
   style={[
     styles.statusBadge,
@@ -169,8 +191,14 @@ setLent(
   ]}
 >
   <Text style={styles.statusText}>
-    {item.status}
-  </Text>
+  {item.status === "Pending"
+    ? "🟡 Pending"
+    : item.status === "Accepted"
+    ? "🟢 Accepted"
+    : item.status === "Rejected"
+    ? "🔴 Rejected"
+    : "🔵 Returned"}
+</Text>
 </View>
 
           {item.status === "Accepted" && (
@@ -218,8 +246,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 15,
     padding: 15,
-    borderRadius: 10,
-    elevation: 2,
+    borderRadius: 16,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
 
   title: {
@@ -321,6 +356,12 @@ emptyTitle: {
 
 emptySubtitle: {
   color: "#6B7280",
+  marginTop: 5,
+},
+
+borrowerName: {
+  color: "#2563EB",
+  fontWeight: "600",
   marginTop: 5,
 },
 });

@@ -52,47 +52,63 @@ export default function EditBookScreen({ route, navigation }: any) {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Title"
-        value={title}
-        onChangeText={setTitle}
-      />
+      <Text style={styles.subTitle}>
+  Update your book details
+</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Author"
-        value={author}
-        onChangeText={setAuthor}
-      />
+<Text style={styles.sectionTitle}>
+  📚 Book Information
+</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Category"
-        value={category}
-        onChangeText={setCategory}
-      />
+      <Text style={styles.label}>📖 Book Title</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Description"
-        value={description}
-        onChangeText={setDescription}
-      />
+<TextInput
+  style={styles.input}
+  value={title}
+  onChangeText={setTitle}
+/>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Condition"
-        value={condition}
-        onChangeText={setCondition}
-      />
+<Text style={styles.label}>✍️ Author</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Location"
-        value={location}
-        onChangeText={setLocation}
-      />
+<TextInput
+  style={styles.input}
+  value={author}
+  onChangeText={setAuthor}
+/>
+
+<Text style={styles.label}>🏷️ Category</Text>
+
+<TextInput
+  style={styles.input}
+  value={category}
+  onChangeText={setCategory}
+/>
+
+<Text style={styles.label}>📝 Description</Text>
+
+<TextInput
+  style={styles.input}
+  value={description}
+  multiline={true}
+  numberOfLines={4}
+  onChangeText={setDescription}
+/>
+
+<Text style={styles.label}>⭐ Condition</Text>
+
+<TextInput
+  style={styles.input}
+  value={condition}
+  onChangeText={setCondition}
+/>
+
+<Text style={styles.label}>📍 Location</Text>
+
+<TextInput
+  style={styles.input}
+  value={location}
+  onChangeText={setLocation}
+/>
 
       <TouchableOpacity
         style={styles.button}
@@ -100,7 +116,7 @@ export default function EditBookScreen({ route, navigation }: any) {
         disabled={loading}
       >
         <Text style={styles.buttonText}>
-          {loading ? "Saving..." : "Save Changes"}
+          {loading ? "Updating..." : "Update Book"}
         </Text>
       </TouchableOpacity>
     </ScrollView>
@@ -132,4 +148,26 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+
+  subTitle: {
+    color: "#6B7280",
+    marginBottom: 20,
+    fontSize: 20,
+    fontWeight: "bold",
+},
+
+sectionTitle: {
+  fontSize: 20,
+  fontWeight: "bold",
+  color: "#111827",
+  marginBottom: 20,
+},
+
+label: {
+  fontSize: 14,
+  fontWeight: "600",
+  color: "#374151",
+  marginBottom: 6,
+  marginTop: 5,
+},
 });

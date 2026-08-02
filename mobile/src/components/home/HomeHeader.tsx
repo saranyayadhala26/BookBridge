@@ -1,17 +1,29 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 type Props = {
   userName: string;
+  onNotificationPress?: () => void;
 };
 
-export default function HomeHeader({ userName }: Props) {
+export default function HomeHeader({ userName, onNotificationPress }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.greeting}>
-        Hi, {userName} 👋
-      </Text>
-    </View>
+  <View style={styles.headerRow}>
+    <Text style={styles.greeting}>
+      Hi, {userName} 👋
+    </Text>
+
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={styles.notificationButton}
+      onPress={onNotificationPress}
+      focusable={false}
+    >
+      <Text style={styles.notificationIcon}>🔔</Text>
+    </TouchableOpacity>
+  </View>
+</View>
   );
 }
 
@@ -33,11 +45,17 @@ const styles = StyleSheet.create({
   width: 40,
   height: 40,
   borderRadius: 20,
-  backgroundColor: "#EFF6FF",
+  backgroundColor: "#FFFFFF",
   justifyContent: "center",
   alignItems: "center",
+  elevation: 2,
 },
 notificationIcon: {
   fontSize: 20,
+},
+headerRow: {
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
 },
 });

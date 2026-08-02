@@ -252,7 +252,7 @@ const getMyLentBooks = async (req, res) => {
       owner: req.user.id,
     })
     .populate("book")
-    .populate("borrower", "fullName email");
+    .populate("borrower", "fullName email trustScore booksBorrowed booksShared location");
 
     return res.status(200).json({
       success: true,

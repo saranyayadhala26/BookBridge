@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function EditProfileScreen() {
+export default function EditProfileScreen({navigation}: any) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
@@ -50,15 +50,21 @@ export default function EditProfileScreen() {
     );
 
     Alert.alert(
-      "Success",
-      "Profile updated successfully."
-    );
+  "Success",
+  "Profile updated successfully!",
+  [
+    {
+      text: "OK",
+      onPress: () => navigation.goBack(),
+    },
+  ]
+);
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>
-        Full Name
+        👤  Full Name
       </Text>
 
       <TextInput
@@ -68,7 +74,7 @@ export default function EditProfileScreen() {
       />
 
       <Text style={styles.label}>
-        Email
+        ✉️  Email
       </Text>
 
       <TextInput
@@ -78,7 +84,7 @@ export default function EditProfileScreen() {
       />
 
       <Text style={styles.label}>
-        Location
+        📍 Location
       </Text>
 
       <TextInput

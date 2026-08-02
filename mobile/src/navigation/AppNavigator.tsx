@@ -8,6 +8,13 @@ import EditBookScreen from "../screens/books/EditBookScreen";
 import { useAuth } from "../context/AuthContext";
 import wishlistScreen from "../screens/books/wishlistScreen";
 import EditProfileScreen from "../screens/profile/EditProfileScreen";
+import SupportHelpScreen from "../screens/profile/SupportHelpScreen";
+import ProfileScreen from "../screens/profile/ProfileScreen";
+import NotificationsScreen from "../screens/profile/NotificationsScreen";
+import MyBooksScreen from "../screens/books/MyBooksScreen";
+import ChatScreen from "../screens/home/ChatScreen";
+import BorrowerProfileScreen from "../screens/borrow/BorrowerProfileScreen";
+
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
@@ -66,7 +73,6 @@ export default function AppNavigator() {
         title: "My Wishlist",
       }}
     />
-
     <Stack.Screen
   name="EditProfile"
   component={EditProfileScreen}
@@ -74,6 +80,55 @@ export default function AppNavigator() {
     title: "Edit Profile",
   }}
 />
+
+<Stack.Screen
+  name="SupportHelp"
+  component={SupportHelpScreen}
+  options={{
+    title: "Support & Help",
+  }}
+/>
+
+<Stack.Screen
+  name="Profile"
+  component={ProfileScreen}
+  options={{
+    title: "Your Account",
+  }}
+/>
+
+<Stack.Screen
+  name="Notifications"
+  component={NotificationsScreen}
+  options={{
+    title: "Notifications",
+  }}
+/>
+
+<Stack.Screen
+  name="MyBooks"
+  component={MyBooksScreen}
+  options={{
+    title: "My Books",
+  }}
+/>
+
+<Stack.Screen
+  name="Chat"
+  component={ChatScreen}
+  options={{
+    title: "Chats",
+  }}
+/>
+
+<Stack.Screen
+  name="BorrowerProfile"
+  component={BorrowerProfileScreen}
+  options={{
+    title: "Borrower Profile",
+  }}
+/>
+    
     </Stack.Navigator>
   );
 }

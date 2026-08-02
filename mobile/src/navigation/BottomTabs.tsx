@@ -15,7 +15,7 @@ export default function BottomTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        headerShown: false,
+        headerShown: true,
 
         tabBarActiveTintColor: "#2563EB",
         tabBarInactiveTintColor: "#9CA3AF",
@@ -111,9 +111,14 @@ export default function BottomTabs() {
       />
 
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-      />
+  name="Profile"
+  component={ProfileScreen}
+  options={{
+    headerShown: true,
+    title: "Your Account",
+    headerTitleAlign: "center",
+  }}
+/>
       
     </Tab.Navigator>
   );
